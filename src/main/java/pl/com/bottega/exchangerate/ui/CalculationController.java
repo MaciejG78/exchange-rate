@@ -4,8 +4,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.bottega.exchangerate.domain.CalculationResult;
-import pl.com.bottega.exchangerate.domain.Calculator;
+import pl.com.bottega.exchangerate.domain.Calculation;
 import pl.com.bottega.exchangerate.domain.commands.CalculateExchangeCommand;
+import pl.com.bottega.exchangerate.infrastructure.ExchangeCalculation;
+
+import java.math.BigDecimal;
 
 /**
  * Created by maciek on 13.05.2017.
@@ -13,20 +16,14 @@ import pl.com.bottega.exchangerate.domain.commands.CalculateExchangeCommand;
 @RestController
 public class CalculationController {
 
-    private Calculator calculator;
+    private ExchangeCalculation exchangeCalculation;
 
-    public CalculationController(Calculator calculator){
-        this.calculator = calculator;
+    public CalculationController(ExchangeCalculation exchangeCalculation){
+        this.exchangeCalculation = exchangeCalculation;
     }
 
     @GetMapping("/calculation")
-    public CalculationResult calculate(@RequestParam(value = "date", required = true) String date,
-                                       @RequestParam(value = "from", required = true) String from,
-                                       @RequestParam(value = "to", required = true) String to,
-                                       @RequestParam(value = "amount", required = true) String amount){
-        CalculateExchangeCommand cmd = new CalculateExchangeCommand();
-
-
-        return calculator.calculate(cmd);
+    public CalculationResult calculate(CalculateExchangeCommand cmd){
+        return exchangeCalculation.calculate(cmd);
     }
 }

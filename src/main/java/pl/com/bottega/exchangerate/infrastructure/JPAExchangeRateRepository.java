@@ -6,6 +6,7 @@ import pl.com.bottega.exchangerate.domain.NoRateException;
 import pl.com.bottega.exchangerate.domain.repositories.ExchangeRateRepository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -33,12 +34,27 @@ public class JPAExchangeRateRepository implements ExchangeRateRepository {
         Root<ExchangeRate> root = criteriaQuery.from(ExchangeRate.class);
         criteriaQuery.where(criteriaBuilder.equal(root.get("date"), date), criteriaBuilder.equal(root.get("currency"), currency));
         TypedQuery<ExchangeRate> query = entityManager.createQuery(criteriaQuery);
-        ExchangeRate exchangeRate = query.getResultList().get(0);
-        if (exchangeRate == null){
-            throw new NoRateException("ExchangeRate", date.toString(), currency);
+        try {
+            ExchangeRate exchangeRate = query.getSingleResult();
+            return exchangeRate;
+        } catch (NoResultException ex) {
+            return null;
         }
-        return exchangeRate;
     }
+
+//    @Override
+//    public ExchangeRate get(String date, String currency) {
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<ExchangeRate> criteriaQuery = criteriaBuilder.createQuery(ExchangeRate.class);
+//        Root<ExchangeRate> root = criteriaQuery.from(ExchangeRate.class);
+//        criteriaQuery.where(criteriaBuilder.equal(root.get("date"), date), criteriaBuilder.equal(root.get("currency"), currency));
+//        TypedQuery<ExchangeRate> query = entityManager.createQuery(criteriaQuery);
+//        ExchangeRate exchangeRate = query.getResultList().get(0);
+//        if (exchangeRate == null){
+//            throw new NoRateException("ExchangeRate", date.toString(), currency);
+//        }
+//        return exchangeRate;
+//    }
 
 
 }

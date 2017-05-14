@@ -13,12 +13,20 @@ import pl.com.bottega.exchangerate.infrastructure.AdminPanel;
 @Transactional
 public class StandardAdminPanel implements AdminPanel {
 
-    @Autowired
     private ExchangeRateRepository exchangeRateRepository;
+
+    public StandardAdminPanel(ExchangeRateRepository exchangeRateRepository) {
+        this.exchangeRateRepository = exchangeRateRepository;
+    }
 
     @Override
     public void saveExchangeRate(ExchangeRateCommand cmd) {
-        ExchangeRate exchangeRate = new ExchangeRate(cmd.getDate(), cmd.getCurrency(), cmd.getRate());
-        exchangeRateRepository.put(exchangeRate);
+        ExchangeRate exchangeRate = exchangeRateRepository.get(cmd.getDate(), cmd.getCurrency());
+        if (exchangeRate != null) {
+        exchangeRate.setRate(cmd.getRate());
+        } else {
+            exchangeRate = new ExchangeRate(cmd.getDate(), cmd.getCurrency(), cmd.getRate());
+            exchangeRateRepository.put(exchangeRate);
+        }
     }
 }

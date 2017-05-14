@@ -53,8 +53,12 @@ public class ExchangeRateCommand implements Validatable {
         if (rate == null) {
             errors.add("rate", "is required");
         } else {
-            if (!Pattern.matches("^\\d+\\.\\d{1,4}$", rate.toString()))
+            if (rate.compareTo(BigDecimal.ZERO) <= 0) {
                 errors.add("rate", "must be > than 0.0");
+            } else {
+                if (!Pattern.matches("^\\d+(\\.\\d{1,4})?$", rate.toString()))
+                    errors.add("rate", "has invalid format");
+            }
         }
     }
 
