@@ -1,9 +1,9 @@
-package pl.com.bottega.exchangerate.api;
+package pl.com.bottega.exchangerate.api.impl;
 
 import pl.com.bottega.exchangerate.domain.Calculation;
 import pl.com.bottega.exchangerate.domain.CalculationResult;
 import pl.com.bottega.exchangerate.domain.commands.CalculateExchangeCommand;
-import pl.com.bottega.exchangerate.infrastructure.ExchangeCalculation;
+import pl.com.bottega.exchangerate.api.ExchangeCalculation;
 
 /**
  * Created by maciek on 14.05.2017.

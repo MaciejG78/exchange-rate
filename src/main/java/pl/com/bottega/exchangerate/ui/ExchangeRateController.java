@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.com.bottega.exchangerate.infrastructure.AdminPanel;
+import pl.com.bottega.exchangerate.api.AdminPanel;
 import pl.com.bottega.exchangerate.domain.commands.ExchangeRateCommand;
 
 /**

@@ -1,7 +1,6 @@
-package pl.com.bottega.exchangerate.infrastructure;
+package pl.com.bottega.exchangerate.api;
 
 import pl.com.bottega.exchangerate.domain.commands.ExchangeRateCommand;
-import pl.com.bottega.exchangerate.ui.ExchangeRateController;
 
 /**
  * Created by maciek on 13.05.2017.
